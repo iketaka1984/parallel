@@ -1,0 +1,134 @@
+\documentclass{jarticle}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{bussproofs}
+\usepackage{setspace}
+
+\usepackage{amssymb,amsmath}
+
+\makeatletter
+\newcommand\xleftrightarrow[2][]{%
+  \ext@arrow 9999{\longleftrightarrowfill@}{#1}{#2}}
+\newcommand\longleftrightarrowfill@{%
+  \arrowfill@\leftarrow\relbar\rightarrow}
+\makeatother
+
+
+\begin{document}
+\begin{flushleft}
+
+\begin{center}
+\begin{prooftree}
+\AxiomC{$s(PC_p) = \langle fork\ an\rangle\ \ \ |\tau(an)| = k$}
+\RightLabel{{\scriptsize $[Fork]$}}
+\UnaryInfC{$\langle Exec_s^a(PC_a,PC'_a,w_a,\pi_a,P_a)\ ||...||$}
+\end{prooftree}
+\end{center}
+
+\begin{center}
+
+$Exec_s^p(PC_p,PC'_p,w_p,\pi_p,P_p)\ ||...||$
+
+$Exec_s^z(PC_z,PC'_z,w_z,\pi_z,P_z),\sigma,\rho,\xi,\tau,\phi, \alpha \rangle$
+
+\vspace{8pt}
+$\rightarrow \langle Exec_s^{a}(PC_a,PC'_a,w_a,\pi_a,P_a)\ ||...||$
+
+$Exec_s^{p.1}(\tau(an,1),PC_p,\epsilon,\pi_p,p)\ ||$
+
+$Exec_s^{p.2}(\tau(an,2),PC_p,\epsilon,\pi_p,p)\ ||...||$
+
+$Exec_s^{p.k}(\tau (an,k),PC_p,\epsilon,\pi_p,p)\ ||...||$
+
+$Exec_s^z(PC_z,PC'_z,w_z,\pi_z,P_z),\sigma,\rho,\xi,\tau,\phi,(p,an)\alpha \rangle$
+\end{center}
+
+
+\begin{prooftree}
+\AxiomC{$(PC_{p}^1,PC_{p}^{'1},w_{p},\pi_{p},P_{p},\rho,\xi)_{(\sigma,\tau,\phi)} \xrightarrow{s(PC_{p}^1) (\neq \langle par\ 1\rangle)}_{(p,N)} (PC_{p}^2,PC_{p}^{'2},w'_{p},\pi'_{p},P_{p},\rho',\xi')_{(\sigma',\tau,\phi)}$}
+\RightLabel{{\scriptsize $[Par]$}}
+\UnaryInfC{$\langle Exec_s^{a}(PC_{a},PC'_{a},w_{a},\pi_{a},P_{a})\ ||...||$}
+
+\end{prooftree}
+
+\begin{center}
+$Exec_s^{p}(PC_{p}^1,PC_{p}^{'1},w_{p},\pi_{p},P_{p})\ ||...||$
+
+$Exec_s^{z}(PC_{z},PC'_{z},w_{z},\pi_{z},P_{z}),\sigma, \rho,\xi,\tau,\phi,\alpha \rangle $
+
+\vspace{8pt}
+$\rightarrow \langle Exec_s^{a}(PC_{a},PC'_{a},w_{a},\pi_{a},P_{a})\ ||...||$
+
+$Exec_s^{p}(PC_{p}^2,PC_{p}^{'2},w'_{p},\pi'_{p},P_{p})\ ||...||$
+
+$Exec_s^{z}(PC_{z},PC'_{z},w_{z},\pi_{z},P_{z}),\sigma', \rho',\xi',\tau,\phi,\alpha \rangle$
+\end{center}
+
+\vspace{16pt}
+\begin{prooftree}
+\AxiomC{$\land_i (s(PC_p.i) = \langle par\ 1\rangle) \ \ \ \ \land_i (P_{p.i} = p)  \ \ \ \ \ |\tau(\alpha(p))| = k$}
+\RightLabel{{\scriptsize $[merge]$}}
+\UnaryInfC{$\langle Exec_s^{a}(PC_a,PC'_a,w_a,\pi_a,P_a)\ ||...||$}
+\end{prooftree}
+
+\begin{center}
+$Exec_s^{p.1}(PC_{p.1},PC'_{p.1},w_{p.1},\pi_{p.1},P_{p.1})\ ||...||$
+
+$Exec_s^{p.k}(PC_{p.k},PC'_{p.k},w_{p.k},\pi_{p.k},P_{p.k})\ ||...||$
+
+$Exec_s^z(PC_z,PC'_z,w_z,\pi_z,P_z),\sigma,\rho,\xi,\tau,\phi,\alpha \rangle$
+
+\vspace{8pt}
+$\rightarrow \langle Exec_s^{a}(PC_a,PC'_a,w_a,\pi_a,P_a)\ ||...||$
+
+$Exec_s^{p}(PC_{p},PC'_{p},w_{p},\pi_{p},P_{p})\ ||...||$
+
+$Exec_s^z(PC_z,PC'_z,w_z,\pi_z,P_z),\sigma,\rho,\xi,\tau,\phi,\alpha \rangle$
+
+\end{center}
+
+\vspace{16pt}
+
+\begin{prooftree}
+\AxiomC{$s(PC_p) = \langle proc\ pn\rangle$}
+\RightLabel{{\scriptsize $[Proc]$}}
+\UnaryInfC{$\langle Exec_s^p(PC_p,PC'_p,w_p,\pi_p,P_p),\sigma,\rho,\xi,\tau,\phi,\alpha \rangle$}
+\end{prooftree}
+\begin{center}
+$\rightarrow \langle Exec_s^p(PC_p+1,PC_p,(PC'_P+1)w_p,(pn)\pi_p,P_p),\sigma,(N+1-PC'_p,(p)\pi_p)\rho,\xi ,\tau,\phi,\alpha \rangle$
+\end{center}
+
+
+\vspace{16pt}
+\begin{prooftree}
+\AxiomC{$s(PC_p) = \langle return\ pn\rangle$}
+\RightLabel{{\scriptsize $[Return]$}}
+\UnaryInfC{$\langle Exec_s^p(PC_p,PC'_p,(a)w_p,(pn)\pi_p,P_p),\sigma,\rho,\xi,\tau,\phi,\alpha \rangle$}
+\end{prooftree}
+\begin{center}
+$\rightarrow \langle Exec_s^p(a,PC_p,w_p,\pi_p,P_p),\sigma,\rho,\xi ,\tau,\phi,\alpha \rangle$
+\end{center}
+
+\vspace{16pt}
+\begin{prooftree}
+\AxiomC{$s(PC_p) = \langle call\ cn \rangle\ \ \ \ \phi(cn)=a $}
+\RightLabel{{\scriptsize $[Call]$}}
+\UnaryInfC{$\langle Exec_s^p(PC_p,PC'_p,w_p,\pi_p,P_p),\sigma,\rho,\xi,\tau,\phi,\alpha \rangle$}
+\end{prooftree}
+\begin{center}
+$\rightarrow \langle Exec_s^p(a,PC_p,w_p,(cn)\pi_p,P_p),\sigma,\rho,\xi ,\tau,\phi,\alpha \rangle$
+\end{center}
+
+
+\vspace{16pt}
+\begin{prooftree}
+\AxiomC{$s(PC_p) = \langle return\_label\ cn\rangle$}
+\RightLabel{{\scriptsize $[Return\_label]$}}
+\UnaryInfC{$\langle Exec_s^p(PC_p,PC'_p,w_p,(pn)\pi_p,P_p),\sigma,\rho,\xi,\tau,\phi,\alpha \rangle$}
+\end{prooftree}
+\begin{center}
+$\rightarrow \langle Exec_s^p(PC_p+1,PC_p,w_p,\pi_p,P_p),\sigma,(N+1-PC'_p,(p)\pi_p)\rho,\xi ,\tau,\phi,\alpha \rangle$
+\end{center}
+
+
+\end{flushleft}
+\end{document}
